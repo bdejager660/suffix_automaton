@@ -51,3 +51,10 @@ pattern.  If you need counts for a different text, build a new automaton;
 there is no mutation API.  Also note that the empty pattern is special-cased to
 `len(text) + 1` rather than `0`, because the empty string occurs at every
 boundary of the text.
+
+## Design notes
+
+The window stores values eagerly rather than keeping running aggregates. Running
+sums drift with floating point over long streams, and recomputing from a small
+buffer is cheap enough that the drift is not worth the speed.
+
